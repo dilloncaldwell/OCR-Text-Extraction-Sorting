@@ -1,7 +1,7 @@
 import os
 import json
 import shutil
-from config import teams_dir, original_images_dir, team_mapping_file, extracted_text_mapping_file
+from _00_config import teams_dir, original_images_dir, team_mapping_file, extracted_text_mapping_file
 
 def sort_images_by_team(teams_dir, team_mapping_file):
     # Create team directories if they don't already exist

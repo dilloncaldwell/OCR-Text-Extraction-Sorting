@@ -5,4 +5,5 @@ original-images/*
 preprocessed-images/*
 extracted_text_mapping.json
 team_mapping.json
-venv
+venv/
+venv/*

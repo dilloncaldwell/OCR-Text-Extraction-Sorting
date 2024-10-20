@@ -4,7 +4,7 @@ import pytesseract
 import json
 import re
 from concurrent.futures import ThreadPoolExecutor
-from _00_config import preprocessed_images_dir, original_images_dir, extracted_text_mapping_file
+from _00_config import preprocessed_images_dir, extracted_text_mapping_file
 
 # Load the image mapping dictionary
 mapping_file = os.path.join(preprocessed_images_dir, "image_mapping.json")
