@@ -1,6 +1,6 @@
 import os
 import json
-from config import teams, categories, age_groups, teams_dir, team_mapping_file
+from _00_config import teams, categories, age_groups, teams_dir, team_mapping_file
 
 def create_folder_structure(teams_dir, teams, categories, age_groups):
     for team in teams:

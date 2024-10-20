@@ -2,7 +2,7 @@ import os
 import cv2
 import json
 from concurrent.futures import ThreadPoolExecutor
-from config import original_images_dir, preprocessed_images_dir
+from _00_config import original_images_dir, preprocessed_images_dir
 
 # Create a mapping dictionary to map preprocessed image filenames to original image filenames
 image_mapping = {}
