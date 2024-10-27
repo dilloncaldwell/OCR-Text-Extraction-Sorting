@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import re
 from _00_config import teams_dir, original_images_dir, team_mapping_file, extracted_text_mapping_file
 
 def sort_images_by_team(teams_dir, team_mapping_file):
@@ -18,7 +19,7 @@ def sort_images_by_team(teams_dir, team_mapping_file):
 
     # Loop through the extracted text mapping
     for original_file, details in extracted_text_mapping.items():
-        extracted_text = details["extracted_text"]
+        extracted_text = details["cleaned_text"].lower()
         original_path = os.path.join(original_images_dir, original_file)
         
         # Check if any team name's keywords are found in the extracted text
@@ -26,7 +27,8 @@ def sort_images_by_team(teams_dir, team_mapping_file):
         for team, data in team_mapping.items():
             keywords = data["keywords"]
             for keyword in keywords:
-                if keyword.lower() in extracted_text.lower():  # Case-insensitive match
+                # Regex to match the keyword, allowing for optional spaces around it
+                if re.search(rf"\b{keyword.lower()}\b", extracted_text):
                     matched_team = team
                     break
             if matched_team:
@@ -41,7 +43,7 @@ def sort_images_by_team(teams_dir, team_mapping_file):
             shutil.move(original_path, new_image_path)  # Move the original image
             print(f"Moved '{original_file}' to team directory: '{team_directory}'")
         else:
-            print(f"No matching team found for '{original_file}'. Extracted text: {extracted_text}")
+            print(f"No matching team found for '{original_file}'. Cleaned Extracted text: {extracted_text}")
 
 # Call the function to sort images into team directories using the team mapping
 sort_images_by_team(teams_dir, team_mapping_file)

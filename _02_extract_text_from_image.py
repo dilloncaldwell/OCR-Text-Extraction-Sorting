@@ -31,9 +31,17 @@ def clean_and_extract_text(text, allowed_terms):
     text = re.sub(r'[|—]', '', text)  # Removes unwanted characters like | and —
     # Split the text into words, and filter to keep only allowed terms or terms longer than 3 characters
     words = text.split()
-    # cleaned_words = [word for word in words if word.lower() in allowed_terms or len(word) > 3]
-    cleaned_words = [word for word in words if word.lower() in allowed_terms]
-    # Join the cleaned words back into a single string
+    cleaned_words = []
+    for word in words:
+        # Check if the word is in allowed terms or if any allowed term is found within the word
+        if word.lower() in allowed_terms:
+            cleaned_words.append(word)
+        else:
+            # Check for partial matches by seeing if any allowed term is a substring of the current word
+            if any(term in word.lower() for term in allowed_terms):
+                cleaned_words.append(word)
+    
+    # Join cleaned words back into a single string
     cleaned_text = ' '.join(cleaned_words)
     return cleaned_text.strip()
 

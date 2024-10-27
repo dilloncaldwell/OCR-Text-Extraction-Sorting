@@ -24,20 +24,6 @@ def preprocess_single_image(image_file):
             return None
 
         gray = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
-        # thresholded = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-
-        # coords = cv2.findNonZero(thresholded)
-        # angle = cv2.minAreaRect(coords)[-1]
-        # if angle < -45:
-        #     angle = -(90 + angle)
-        # else:
-        #     angle = -angle
-        # (h, w) = thresholded.shape[:2]
-        # center = (w // 2, h // 2)
-        # M = cv2.getRotationMatrix2D(center, angle, 1.0)
-        # deskewed = cv2.warpAffine(thresholded, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-
-        # denoised = cv2.fastNlMeansDenoising(thresholded, None, 10, 7, 21)
         denoised = cv2.fastNlMeansDenoising(gray, None, 10, 7, 21)
         
         cv2.imwrite(preprocessed_path, denoised)

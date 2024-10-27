@@ -13,18 +13,6 @@ def create_folder_structure(teams_dir, teams, categories, age_groups):
                 coaches_path = os.path.join(age_group_path, 'coaches')
                 os.makedirs(coaches_path, exist_ok=True)
 
-# def create_team_mapping(teams, output_file):
-#     team_mapping = {}
-#     for team in teams:
-#         # Split the team name into keywords based on hyphens
-#         keywords = team.split('-')
-#         team_mapping[team] = {"keywords": keywords}
-    
-#     # Save the team mapping to a JSON file
-#     with open(output_file, 'w') as f:
-#         json.dump(team_mapping, f, indent=4)
-#     print(f"Team mapping saved to {output_file}")
-
 def create_team_mapping(teams, additional_keywords, output_file):
     team_mapping = {}
     # Loop through each team

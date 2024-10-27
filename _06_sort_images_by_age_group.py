@@ -12,7 +12,7 @@ def sort_images_by_age_group():
         'tm': ['tm', 'tiny mites', 'tiny mights', '6U', 'tiny', 'tinymites', 'tinymights'],
         'mm': ['mm', 'mighty mites', 'mighty mights', '8U', 'mighty', 'mightymites', 'mightymights'],
         'jv': ['jv', 'junior varsity', '10U', 'junior', 'juniorvarsity', '10'],
-        'v': ['v', 'varsity', '12U', '12'],
+        'v': [r'\bv\b', 'varsity', '12U', '12'], # '\bv\b' ensures 'v' matches as a standalone word
     }
 
     for team in teams:
@@ -29,17 +29,23 @@ def sort_images_by_age_group():
                 print(f"Category folder {category} does not exist in team {team}. Skipping...")
                 continue
 
-            for image_name, details in extracted_text_mapping.items():
-                source_path = os.path.join(category_folder_path, image_name)  # Updated
-                if not os.path.exists(source_path):  # Only process images in the category folder
-                    print(f"File {image_name} does not exist in {category_folder_path}. Skipping...")
+            # Get a list of image files in the category folder
+            image_files = [f for f in os.listdir(category_folder_path) if os.path.isfile(os.path.join(category_folder_path, f))]
+            # Process each image file directly
+            for image_name in image_files:
+                source_path = os.path.join(category_folder_path, image_name)
+
+                # Check if the image is in the extracted text mapping
+                if image_name not in extracted_text_mapping:
+                    print(f"File '{image_name}' is not in extracted text mapping. Skipping...")
                     continue
 
-                cleaned_text = details['cleaned_text'].lower()
+                cleaned_text = extracted_text_mapping[image_name]['cleaned_text'].lower()
                 found_age_group = False
 
                 for short_name, keywords in age_group_mappings.items():
-                    if any(keyword in cleaned_text for keyword in keywords):
+                    # if any(keyword in cleaned_text for keyword in keywords):
+                    if any(re.search(rf"{keyword.lower()}", cleaned_text.replace(" ", "")) for keyword in keywords):
                         age_group_folder_path = os.path.join(category_folder_path, short_name)
                         os.makedirs(age_group_folder_path, exist_ok=True)
                         destination_path = os.path.join(age_group_folder_path, image_name)
