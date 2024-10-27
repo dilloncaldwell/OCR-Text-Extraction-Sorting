@@ -17,7 +17,7 @@ age_groups = ['tm', 'mm', 'jv', 'v']
 
 # Add addtional keywords to the team_mppings.json file other then team name, mapped to teams index
 team_additional_keywords = {
-    0: [], 
+    0: ['BOGERCITYOPTIMIST'], 
     1: [],  
     2: [], 
     3: [], 
